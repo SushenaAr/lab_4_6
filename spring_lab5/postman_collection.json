@@ -1,0 +1,47 @@
+{
+  "info": {
+    "name": "spring-lab4-notifications",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create user",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8080/users/add", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["users", "add"]},
+        "body": {"mode": "raw", "raw": "{\n  \"name\": \"Иван Иванов\",\n  \"email\": \"ivan@example.com\",\n  \"phone\": \"+79990001122\",\n  \"deviceToken\": \"device-token-123\",\n  \"telegramChatId\": \"123456789\"\n}"}
+      }
+    },
+    {
+      "name": "Get all users",
+      "request": {
+        "method": "GET",
+        "url": {"raw": "http://localhost:8080/users/all", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["users", "all"]}
+      }
+    },
+    {
+      "name": "Create notification",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8080/notifications/add", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["notifications", "add"]},
+        "body": {"mode": "raw", "raw": "{\n  \"title\": \"Напоминание\",\n  \"message\": \"Завтра состоится занятие по Spring Data\",\n  \"channel\": \"EMAIL\",\n  \"recipientId\": 1\n}"}
+      }
+    },
+    {
+      "name": "Get all notifications",
+      "request": {
+        "method": "GET",
+        "url": {"raw": "http://localhost:8080/notifications/all", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["notifications", "all"]}
+      }
+    },
+    {
+      "name": "Search by status and channel",
+      "request": {
+        "method": "GET",
+        "url": {"raw": "http://localhost:8080/notifications/search?status=CREATED&channel=EMAIL", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["notifications", "search"], "query": [{"key":"status","value":"CREATED"},{"key":"channel","value":"EMAIL"}]}
+      }
+    }
+  ]
+}

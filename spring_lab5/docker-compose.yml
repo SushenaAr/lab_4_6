@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: spring_lab5_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: spring_lab5_notifications
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - spring_lab5_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d spring_lab5_notifications"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring_lab5_api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/spring_lab5_notifications
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: verySecretKeyForJwtTokenVerySecretKey12345
+    ports:
+      - "8080:8080"
+
+volumes:
+  spring_lab5_pgdata:

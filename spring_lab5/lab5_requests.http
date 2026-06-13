@@ -1,0 +1,79 @@
+### 1. Открытый endpoint
+GET http://localhost:8080/hello
+
+### 2. Регистрация обычного пользователя
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Oleg",
+  "email": "oooleg@example.com",
+  "password": "qwerty123",
+  "phone": "+79990001122",
+  "deviceToken": "device-token-123",
+  "telegramChatId": "123456789"
+}
+
+
+### 3. Регистрация администратора
+POST http://localhost:8080/auth/register-admin
+Content-Type: application/json
+
+{
+  "name": "Администратор",
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### 4. Логин пользователя и получение JWT
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### 5. Логин администратора и получение JWT
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "Oleg@example.com",
+  "password": "qwerty123"
+}
+
+### 6. Проверка закрытого URL без авторизации: ожидается 401
+GET http://localhost:8080/users/all
+
+### 7. Проверка Basic Auth
+GET http://localhost:8080/users/all
+Authorization: Basic ivan@example.com qwerty123
+
+### 8. Проверка JWT. Подставь токен из /auth/login
+GET http://localhost:8080/users/all
+Authorization: Bearer ВСТАВЬ_ТОКЕН_ПОЛЬЗОВАТЕЛЯ
+
+### 9. Обычный пользователь обращается к admin endpoint: ожидается 403
+GET http://localhost:8080/admin/ping
+Authorization: Bearer ВСТАВЬ_ТОКЕН_ПОЛЬЗОВАТЕЛЯ
+
+### 10. Администратор обращается к admin endpoint: ожидается 200
+GET http://localhost:8080/admin/ping
+Authorization: Bearer ВСТАВЬ_ТОКЕН_АДМИНА
+
+### 11. Создание уведомления с JWT
+POST http://localhost:8080/notifications/add
+Content-Type: application/json
+Authorization: Bearer ВСТАВЬ_ТОКЕН_ПОЛЬЗОВАТЕЛЯ
+
+{
+  "title": "Напоминание",
+  "message": "Завтра лабораторная по Spring Security",
+  "channel": "EMAIL",
+  "recipientId": 1
+}
+
+### 12. Удаление пользователя защищено @PreAuthorize: нужен ADMIN
+DELETE http://localhost:8080/users/1
+Authorization: Bearer ВСТАВЬ_ТОКЕН_АДМИНА

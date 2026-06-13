@@ -1,0 +1,79 @@
+### Создать пользователя
+POST http://localhost:8080/users/add
+Content-Type: application/json
+
+{
+  "name": "Иван Иванов",
+  "email": "ivan@example.com",
+  "phone": "+79990001122",
+  "deviceToken": "device-token-123",
+  "telegramChatId": "123456789"
+}
+
+### Получить всех пользователей
+GET http://localhost:8080/users/all
+
+### Получить пользователя по id
+GET http://localhost:8080/users/1
+
+### Обновить пользователя
+PUT http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "name": "Иван Петров",
+  "email": "ivan.petrov@example.com",
+  "phone": "+79990001123",
+  "deviceToken": "device-token-456",
+  "telegramChatId": "987654321"
+}
+
+### Создать уведомление
+POST http://localhost:8080/notifications/add
+Content-Type: application/json
+
+{
+  "title": "Напоминание",
+  "message": "Завтра состоится занятие по Spring Data",
+  "channel": "EMAIL",
+  "recipientId": 1
+}
+
+### Получить все уведомления
+GET http://localhost:8080/notifications/all
+
+### Получить уведомление по id
+GET http://localhost:8080/notifications/1
+
+### Обновить уведомление
+PUT http://localhost:8080/notifications/1
+Content-Type: application/json
+
+{
+  "title": "Напоминание обновлено",
+  "message": "Завтра лабораторная по Spring Data JPA",
+  "channel": "TELEGRAM",
+  "status": "SENT",
+  "recipientId": 1
+}
+
+### Удалить уведомление
+DELETE http://localhost:8080/notifications/1
+
+### Поиск по статусу
+GET http://localhost:8080/notifications/status/CREATED
+
+### Поиск по каналу
+GET http://localhost:8080/notifications/channel/EMAIL
+
+### Поиск по получателю
+GET http://localhost:8080/notifications/recipient/1
+
+### Поиск по статусу и каналу
+GET http://localhost:8080/notifications/search?status=CREATED&channel=EMAIL
+
+### Сортировка по дате создания по убыванию
+GET http://localhost:8080/notifications/sorted/CREATED
+
+### Поиск уведомлений пользователя по статусу
+GET http://localhost:8080/notifications/recipient/1/status/CREATED
